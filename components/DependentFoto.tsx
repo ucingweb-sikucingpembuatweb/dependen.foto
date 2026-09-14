@@ -144,31 +144,26 @@ const services = [
     "01",
     "RUNNING",
     "Running event, marathon, race day, dan komunitas lari.",
-    images.runOne,
   ],
   [
     "02",
     "GRADUATION",
     "Foto wisuda, sidang, keluarga, teman, dan cerita kampus.",
-    images.graduationOne,
   ],
   [
     "03",
     "RIDE",
     "Motor, gathering, lifestyle, dan dokumentasi yang tidak kaku.",
-    images.RideOne,
   ],
   [
     "04",
     "PORTRAIT",
     "Portrait personal, profesional, dan editorial yang tetap natural.",
-    images.potret,
   ],
   [
     "05",
     "EVENT",
     "Dokumentasi acara yang terasa hidup, bukan sekadar lengkap.",
-    images.crowd,
   ],
 ] as const;
 
@@ -480,7 +475,6 @@ function ReviewCard({
 export default function DependenFoto() {
   const [menu, setMenu] = useState(false);
   const [heroIndex, setHeroIndex] = useState(0);
-  const [service, setService] = useState(0);
   const [scrolled, setScrolled] = useState(false);
 
   const heroImages = useMemo(
@@ -580,8 +574,7 @@ export default function DependenFoto() {
 
           {/* =================================================
               DESKTOP NAVIGATION
-              Muncul hanya pada layar besar / laptop lebar
-          ================================================= */}
+              ================================================= */}
 
           <div className="hidden items-center gap-7 text-[10px] font-bold uppercase tracking-[.16em] xl:flex">
             <a
@@ -624,8 +617,7 @@ export default function DependenFoto() {
 
           {/* =================================================
               MOBILE / TABLET
-              Hanya hamburger
-          ================================================= */}
+              ================================================= */}
 
           <button
             aria-label="Buka menu"
@@ -693,10 +685,11 @@ export default function DependenFoto() {
 
       {/* =====================================================
           HERO
-          Diberi margin setinggi navbar supaya tidak tertutup
+          MOBILE:
+          Memanfaatkan hampir seluruh tinggi layar
       ===================================================== */}
 
-      <section className="film-grain relative mt-[64px] min-h-[calc(88svh-64px)] overflow-hidden bg-black text-white sm:mt-[70px] sm:min-h-[calc(92svh-70px)]">
+      <section className="film-grain relative min-h-[100svh] overflow-hidden bg-black text-white sm:min-h-[calc(100svh-70px)]">
         <motion.div
           style={{ y: heroY, scale: heroScale }}
           className="absolute inset-0"
@@ -724,7 +717,7 @@ export default function DependenFoto() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10" />
         </motion.div>
 
-        <div className="relative z-10 mx-auto flex min-h-[calc(88svh-64px)] max-w-[1500px] items-center px-5 pb-8 pt-16 sm:min-h-[calc(92svh-70px)] sm:items-end sm:px-8 sm:pb-14">
+        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1500px] items-end px-5 pb-8 pt-24 sm:min-h-[calc(100svh-70px)] sm:px-8 sm:pb-14 sm:pt-20">
           <div className="w-full">
             <motion.p
               initial={{ opacity: 0 }}
@@ -754,11 +747,16 @@ export default function DependenFoto() {
                 YANG BICARAKAN.
               </motion.h1>
 
+              {/* =================================================
+                  DESKRIPSI + CTA
+                  CTA sengaja berada langsung di bawah deskripsi
+              ================================================= */}
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.72 }}
-                className="mt-7 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"
+                className="mt-7"
               >
                 <p className="max-w-md text-sm leading-6 text-white/78 sm:text-base">
                   Kami memotret momen yang ingin kamu ingat, tapi mungkin
@@ -766,7 +764,7 @@ export default function DependenFoto() {
                   sampai acara yang ramai oleh cerita.
                 </p>
 
-                <div className="flex flex-wrap gap-2.5">
+                <div className="mt-6 flex flex-wrap gap-2.5 sm:mt-7">
                   <MagneticLink
                     href={wa(
                       "Halo dependen.foto, saya ingin melihat paket fotografi."
@@ -782,7 +780,7 @@ export default function DependenFoto() {
               </motion.div>
             </div>
 
-            <div className="mt-9 flex items-center justify-between text-[9px] uppercase tracking-[.16em] text-white/55 sm:mt-12">
+            <div className="mt-8 flex items-center justify-between text-[9px] uppercase tracking-[.16em] text-white/55 sm:mt-12">
               <span>01 — 03 / CERITA UTAMA</span>
 
               <span className="hidden sm:block">
@@ -828,6 +826,10 @@ export default function DependenFoto() {
           </Reveal>
 
           <div className="mt-10 sm:mt-14">
+            {/* =================================================
+                MOBILE CATEGORY
+            ================================================= */}
+
             <div className="category-mobile-carousel lg:hidden">
               {[...categories, ...categories].map((item, i) => (
                 <motion.div
@@ -862,6 +864,10 @@ export default function DependenFoto() {
                 </motion.div>
               ))}
             </div>
+
+            {/* =================================================
+                DESKTOP CATEGORY
+            ================================================= */}
 
             <div className="hidden lg:grid lg:grid-cols-5 lg:gap-4">
               {categories.map((item) => (
@@ -1020,6 +1026,7 @@ export default function DependenFoto() {
 
       {/* =====================================================
           SERVICES
+          FOTO HOVER DIHAPUS
       ===================================================== */}
 
       <section
@@ -1056,15 +1063,14 @@ export default function DependenFoto() {
             </div>
 
             <div className="border-t border-black/20">
-              {services.map(([n, title, desc, image], i) => (
+              {services.map(([n, title, desc], i) => (
                 <motion.a
                   key={title}
                   href={wa(
                     `Halo dependen.foto, saya tertarik dengan jasa foto ${title.toLowerCase()}.`
                   )}
-                  onMouseEnter={() => setService(i)}
                   whileHover={{ x: 7 }}
-                  className="group relative flex items-center justify-between border-b border-black/20 py-5 transition-colors hover:text-white"
+                  className="group flex items-center justify-between border-b border-black/20 py-5 transition-colors hover:text-white"
                 >
                   <div className="flex gap-4">
                     <span className="pt-1 text-[9px] opacity-45">
@@ -1083,28 +1089,6 @@ export default function DependenFoto() {
                   </div>
 
                   <ArrowUpRight className="mr-1 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-
-                  {service === i && (
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        scale: 0.9,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        scale: 1,
-                      }}
-                      className="pointer-events-none absolute right-14 top-1/2 hidden h-32 w-24 -translate-y-1/2 overflow-hidden rounded-xl lg:block"
-                    >
-                      <Image
-                        src={image}
-                        alt=""
-                        fill
-                        sizes="96px"
-                        className="object-cover"
-                      />
-                    </motion.div>
-                  )}
                 </motion.a>
               ))}
             </div>
