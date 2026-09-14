@@ -140,11 +140,7 @@ const categories = [
    ========================================================= */
 
 const services = [
-  [
-    "01",
-    "RUNNING",
-    "Running event, marathon, race day, dan komunitas lari.",
-  ],
+  ["01", "RUNNING", "Running event, marathon, race day, dan komunitas lari."],
   [
     "02",
     "GRADUATION",
@@ -484,17 +480,9 @@ export default function DependenFoto() {
 
   const { scrollYProgress } = useScroll();
 
-  const heroY = useTransform(
-    scrollYProgress,
-    [0, 0.18],
-    [0, -60]
-  );
+  const heroY = useTransform(scrollYProgress, [0, 0.18], [0, -60]);
 
-  const heroScale = useTransform(
-    scrollYProgress,
-    [0, 0.18],
-    [1, 1.05]
-  );
+  const heroScale = useTransform(scrollYProgress, [0, 0.18], [1, 1.05]);
 
   /* =======================================================
      NAVBAR SCROLL STATE
@@ -574,7 +562,7 @@ export default function DependenFoto() {
 
           {/* =================================================
               DESKTOP NAVIGATION
-              ================================================= */}
+          ================================================= */}
 
           <div className="hidden items-center gap-7 text-[10px] font-bold uppercase tracking-[.16em] xl:flex">
             <a
@@ -617,7 +605,7 @@ export default function DependenFoto() {
 
           {/* =================================================
               MOBILE / TABLET
-              ================================================= */}
+          ================================================= */}
 
           <button
             aria-label="Buka menu"
@@ -685,11 +673,11 @@ export default function DependenFoto() {
 
       {/* =====================================================
           HERO
-          MOBILE:
-          Memanfaatkan hampir seluruh tinggi layar
+          DESKTOP:
+          Tambahan ruang atas agar tidak tertutup navbar
       ===================================================== */}
 
-      <section className="film-grain relative min-h-[100svh] overflow-hidden bg-black text-white sm:min-h-[calc(100svh-70px)]">
+      <section className="film-grain relative min-h-[100svh] overflow-hidden bg-black text-white sm:min-h-[calc(100svh-70px)] lg:pt-16">
         <motion.div
           style={{ y: heroY, scale: heroScale }}
           className="absolute inset-0"
@@ -717,13 +705,13 @@ export default function DependenFoto() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10" />
         </motion.div>
 
-        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1500px] items-end px-5 pb-8 pt-24 sm:min-h-[calc(100svh-70px)] sm:px-8 sm:pb-14 sm:pt-20">
+        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1500px] items-end px-5 pb-8 pt-32 sm:min-h-[calc(100svh-70px)] sm:px-8 sm:pb-14 sm:pt-28 lg:min-h-[calc(100svh-70px)] lg:pt-36">
           <div className="w-full">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="mb-6 text-[10px] font-bold uppercase tracking-[.2em] text-white/70"
+              className="mb-5 text-[9px] font-bold uppercase tracking-[.2em] text-white/70 sm:text-[10px]"
             >
               JASA FOTOGRAFI
             </motion.p>
@@ -733,7 +721,7 @@ export default function DependenFoto() {
                 initial={{ y: 35, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.35, duration: 0.8 }}
-                className="hero-title font-bold leading-[.92] tracking-[-.045em]"
+                className="hero-title max-w-4xl font-bold leading-[.92] tracking-[-.045em] lg:text-[clamp(4.5rem,7vw,7.5rem)]"
               >
                 MOMENMU,
                 <br />
@@ -749,14 +737,13 @@ export default function DependenFoto() {
 
               {/* =================================================
                   DESKRIPSI + CTA
-                  CTA sengaja berada langsung di bawah deskripsi
               ================================================= */}
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.72 }}
-                className="mt-7"
+                className="mt-6 lg:mt-7"
               >
                 <p className="max-w-md text-sm leading-6 text-white/78 sm:text-base">
                   Kami memotret momen yang ingin kamu ingat, tapi mungkin
@@ -931,15 +918,10 @@ export default function DependenFoto() {
 
           <div className="mt-12 space-y-20 sm:mt-20 sm:space-y-28">
             {stories.map((story, i) => (
-              <Reveal
-                key={story.title}
-                delay={i * 0.05}
-              >
+              <Reveal key={story.title} delay={i * 0.05}>
                 <article
                   className={`grid items-center gap-8 lg:grid-cols-[.38fr_1fr] ${
-                    i % 2
-                      ? "lg:grid-cols-[1fr_.38fr]"
-                      : ""
+                    i % 2 ? "lg:grid-cols-[1fr_.38fr]" : ""
                   }`}
                 >
                   <div className={i % 2 ? "lg:order-2" : ""}>
@@ -974,10 +956,7 @@ export default function DependenFoto() {
           ABOUT
       ===================================================== */}
 
-      <section
-        id="about"
-        className="px-5 py-20 sm:px-8 sm:py-32"
-      >
+      <section id="about" className="px-5 py-20 sm:px-8 sm:py-32">
         <div className="mx-auto max-w-[1500px]">
           <div className="grid gap-12 lg:grid-cols-[1fr_.65fr]">
             <Reveal>
@@ -997,10 +976,7 @@ export default function DependenFoto() {
               </h2>
             </Reveal>
 
-            <Reveal
-              delay={0.1}
-              className="flex flex-col justify-end"
-            >
+            <Reveal delay={0.1} className="flex flex-col justify-end">
               <p className="text-xl font-medium leading-8 sm:text-3xl sm:leading-10">
                 Kami tidak mengejar foto yang sekadar terlihat bagus. Kami
                 mengejar foto yang membuat kamu berhenti sebentar lalu bilang,
@@ -1026,7 +1002,7 @@ export default function DependenFoto() {
 
       {/* =====================================================
           SERVICES
-          FOTO HOVER DIHAPUS
+          DESKRIPSI ITEM DIHAPUS
       ===================================================== */}
 
       <section
@@ -1063,7 +1039,7 @@ export default function DependenFoto() {
             </div>
 
             <div className="border-t border-black/20">
-              {services.map(([n, title, desc], i) => (
+              {services.map(([n, title], i) => (
                 <motion.a
                   key={title}
                   href={wa(
@@ -1072,20 +1048,14 @@ export default function DependenFoto() {
                   whileHover={{ x: 7 }}
                   className="group flex items-center justify-between border-b border-black/20 py-5 transition-colors hover:text-white"
                 >
-                  <div className="flex gap-4">
-                    <span className="pt-1 text-[9px] opacity-45">
+                  <div className="flex items-center gap-4">
+                    <span className="text-[9px] opacity-45">
                       {n}
                     </span>
 
-                    <div>
-                      <h3 className="text-[clamp(2.2rem,5.5vw,5.8rem)] font-bold leading-[.92] tracking-[-.045em]">
-                        {title}
-                      </h3>
-
-                      <p className="mt-2 max-w-md text-xs leading-5 opacity-65">
-                        {desc}
-                      </p>
-                    </div>
+                    <h3 className="text-[clamp(2.2rem,5.5vw,5.8rem)] font-bold leading-[.92] tracking-[-.045em]">
+                      {title}
+                    </h3>
                   </div>
 
                   <ArrowUpRight className="mr-1 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
@@ -1185,9 +1155,10 @@ export default function DependenFoto() {
 
       {/* =====================================================
           TESTIMONIAL / REVIEW WALL
+          UNGU DIBUAT LEBIH SOFT
       ===================================================== */}
 
-      <section className="relative overflow-hidden bg-[var(--purple)] px-5 py-24 text-white sm:px-8 sm:py-36">
+      <section className="relative overflow-hidden bg-[#33245A] px-5 py-24 text-white sm:px-8 sm:py-36">
         <motion.div
           animate={{
             rotate: [0, 360],
@@ -1276,6 +1247,7 @@ export default function DependenFoto() {
 
       {/* =====================================================
           CONTACT / CTA
+          CHAT WHATSAPP KEDUA DIHAPUS
       ===================================================== */}
 
       <section
@@ -1323,14 +1295,6 @@ export default function DependenFoto() {
                   )}
                 >
                   Booking sekarang
-                </MagneticLink>
-
-                <MagneticLink
-                  href={wa(
-                    "Halo dependen.foto, saya ingin konsultasi kebutuhan fotografi."
-                  )}
-                >
-                  Chat WhatsApp
                 </MagneticLink>
               </div>
             </Reveal>
