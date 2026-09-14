@@ -11,6 +11,10 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 
+/* =========================================================
+   WHATSAPP
+   ========================================================= */
+
 const WA = "6282234331435";
 
 const wa = (message: string) =>
@@ -99,7 +103,6 @@ const images = {
    ========================================================= */
 
 const categories = [
-
   {
     n: "01",
     title: "RUNNING",
@@ -180,7 +183,8 @@ const stories = [
     meta: "JAKARTA / RACE DAY / RUNNING",
     text: "Panas, napas, pace, crowd, lalu satu momen ketika garis finis akhirnya tinggal beberapa langkah.",
     images: [images.runOne, images.runTwo, images.runThree],
-  },{
+  },
+  {
     no: "02",
     title: "HARI YANG AKHIRNYA TIBA",
     meta: "YOGYAKARTA / 2026 / GRADUATION",
@@ -201,7 +205,7 @@ const stories = [
 ];
 
 /* =========================================================
-   TESTIMONIALS — 9 REVIEWS
+   TESTIMONIALS
    ========================================================= */
 
 const testimonials = [
@@ -439,13 +443,9 @@ function ReviewCard({
         index % 3 === 1 ? "lg:translate-y-8" : ""
       }`}
     >
-      {/* decorative number */}
-
       <span className="absolute right-5 top-5 text-[9px] font-bold tracking-[.18em] text-white/20">
         {String(index + 1).padStart(2, "0")}
       </span>
-
-      {/* orange accent */}
 
       <div className="mb-7 h-1 w-8 rounded-full bg-[var(--orange)] transition-all duration-500 group-hover:w-16" />
 
@@ -453,7 +453,7 @@ function ReviewCard({
         {review.text}
       </p>
 
-      <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between border-t border-white/10 pt-4 sm:left-7 sm:right-7 sm:bottom-7">
+      <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between border-t border-white/10 pt-4 sm:bottom-7 sm:left-7 sm:right-7">
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[.15em]">
             {review.name}
@@ -477,10 +477,11 @@ function ReviewCard({
    MAIN COMPONENT
    ========================================================= */
 
-export default function DependentFoto() {
+export default function DependenFoto() {
   const [menu, setMenu] = useState(false);
   const [heroIndex, setHeroIndex] = useState(0);
   const [service, setService] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
 
   const heroImages = useMemo(
     () => [images.runOne, images.runTwo, images.runThree],
@@ -501,6 +502,30 @@ export default function DependentFoto() {
     [1, 1.05]
   );
 
+  /* =======================================================
+     NAVBAR SCROLL STATE
+     ======================================================= */
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 30);
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  /* =======================================================
+     HERO CAROUSEL
+     ======================================================= */
+
   useEffect(() => {
     const id = window.setInterval(() => {
       setHeroIndex((i) => (i + 1) % heroImages.length);
@@ -511,7 +536,7 @@ export default function DependentFoto() {
 
   /* =======================================================
      PHOTO WALL CAROUSEL
-  ======================================================= */
+     ======================================================= */
 
   const photoWall = [
     images.potret,
@@ -531,15 +556,21 @@ export default function DependentFoto() {
       ===================================================== */}
 
       <header className="fixed left-0 top-0 z-50 w-full">
-        <nav className="flex min-h-[64px] w-full items-center justify-between border-b border-white/20 bg-black/55 px-4 py-3 text-white shadow-lg backdrop-blur-md sm:min-h-[70px] sm:px-6">
+        <nav
+          className={`flex min-h-[64px] w-full items-center justify-between border-b px-4 py-3 text-white shadow-lg backdrop-blur-md transition-all duration-500 sm:min-h-[70px] sm:px-6 ${
+            scrolled
+              ? "border-white/20 bg-black/55"
+              : "border-white/10 bg-black"
+          }`}
+        >
           <a
             href="#"
             className="flex items-center"
-            aria-label="dependent.foto"
+            aria-label="dependen.foto"
           >
             <Image
               src={images.logo}
-              alt="dependent.foto"
+              alt="dependen.foto"
               width={300}
               height={90}
               className="h-auto max-h-[4.5rem] w-auto object-contain sm:max-h-16"
@@ -547,8 +578,12 @@ export default function DependentFoto() {
             />
           </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden items-center gap-7 text-[10px] font-bold uppercase tracking-[.16em] md:flex">
+          {/* =================================================
+              DESKTOP NAVIGATION
+              Muncul hanya pada layar besar / laptop lebar
+          ================================================= */}
+
+          <div className="hidden items-center gap-7 text-[10px] font-bold uppercase tracking-[.16em] xl:flex">
             <a
               href="#work"
               className="transition-colors hover:text-[var(--orange)]"
@@ -579,7 +614,7 @@ export default function DependentFoto() {
 
             <a
               href={wa(
-                "Halo dependent.foto, saya ingin bertanya terkait paket fotografi."
+                "Halo dependen.foto, saya ingin bertanya terkait paket fotografi."
               )}
               className="rounded-full border border-white/40 px-4 py-2 transition-colors hover:bg-white hover:text-black"
             >
@@ -587,46 +622,21 @@ export default function DependentFoto() {
             </a>
           </div>
 
-          {/* Mobile Navigation */}
-          <div className="flex items-center gap-1.5 md:hidden">
-            <a
-              href="#work"
-              className="rounded-full border border-white/25 bg-white/5 px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[.08em] text-white/90 backdrop-blur-sm transition-all active:scale-95 hover:border-[var(--orange)] hover:bg-[var(--orange)] hover:text-black"
-            >
-              Karya
-            </a>
+          {/* =================================================
+              MOBILE / TABLET
+              Hanya hamburger
+          ================================================= */}
 
-            <a
-              href="#services"
-              className="rounded-full border border-white/25 bg-white/5 px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[.08em] text-white/90 backdrop-blur-sm transition-all active:scale-95 hover:border-[var(--orange)] hover:bg-[var(--orange)] hover:text-black"
-            >
-              Jasa
-            </a>
-
-            <a
-              href="#about"
-              className="rounded-full border border-white/25 bg-white/5 px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[.08em] text-white/90 backdrop-blur-sm transition-all active:scale-95 hover:border-[var(--orange)] hover:bg-[var(--orange)] hover:text-black"
-            >
-              Tentang
-            </a>
-
-            <a
-              href="#contact"
-              className="rounded-full border border-white/25 bg-white/5 px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[.08em] text-white/90 backdrop-blur-sm transition-all active:scale-95 hover:border-[var(--orange)] hover:bg-[var(--orange)] hover:text-black"
-            >
-              Kontak
-            </a>
-
-            <button
-              aria-label="Buka menu"
-              className="ml-1 flex h-8 w-8 items-center justify-center rounded-full border border-white/30 bg-white/5 transition-all active:scale-90 hover:bg-white hover:text-black"
-              onClick={() => setMenu(true)}
-            >
-              <Menu size={18} />
-            </button>
-          </div>
+          <button
+            aria-label="Buka menu"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white/5 transition-all active:scale-90 hover:bg-white hover:text-black xl:hidden"
+            onClick={() => setMenu(true)}
+          >
+            <Menu size={19} />
+          </button>
         </nav>
       </header>
+
       {/* =====================================================
           MOBILE MENU
       ===================================================== */}
@@ -643,7 +653,7 @@ export default function DependentFoto() {
             <button
               aria-label="Tutup menu"
               onClick={() => setMenu(false)}
-              className="absolute right-6 top-6"
+              className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full border border-white/20"
             >
               <X />
             </button>
@@ -656,10 +666,10 @@ export default function DependentFoto() {
                     x === "KARYA"
                       ? "work"
                       : x === "JASA"
-                      ? "services"
-                      : x === "TENTANG"
-                      ? "about"
-                      : "contact"
+                        ? "services"
+                        : x === "TENTANG"
+                          ? "about"
+                          : "contact"
                   }`}
                   onClick={() => setMenu(false)}
                   className="text-5xl font-bold tracking-[-.04em] sm:text-7xl"
@@ -670,7 +680,7 @@ export default function DependentFoto() {
 
               <a
                 href={wa(
-                  "Halo dependent.foto, saya ingin melihat paket fotografi."
+                  "Halo dependen.foto, saya ingin melihat paket fotografi."
                 )}
                 className="mt-6 w-fit rounded-full bg-[var(--orange)] px-5 py-3 text-xs font-bold text-white"
               >
@@ -683,9 +693,10 @@ export default function DependentFoto() {
 
       {/* =====================================================
           HERO
+          Diberi margin setinggi navbar supaya tidak tertutup
       ===================================================== */}
 
-      <section className="film-grain relative min-h-[88svh] overflow-hidden bg-black text-white sm:min-h-[92svh]">
+      <section className="film-grain relative mt-[64px] min-h-[calc(88svh-64px)] overflow-hidden bg-black text-white sm:mt-[70px] sm:min-h-[calc(92svh-70px)]">
         <motion.div
           style={{ y: heroY, scale: heroScale }}
           className="absolute inset-0"
@@ -713,7 +724,7 @@ export default function DependentFoto() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10" />
         </motion.div>
 
-        <div className="relative z-10 mx-auto flex min-h-[88svh] max-w-[1500px] items-center px-5 pb-8 pt-28 sm:min-h-[92svh] sm:items-end sm:px-8 sm:pb-14">
+        <div className="relative z-10 mx-auto flex min-h-[calc(88svh-64px)] max-w-[1500px] items-center px-5 pb-8 pt-16 sm:min-h-[calc(92svh-70px)] sm:items-end sm:px-8 sm:pb-14">
           <div className="w-full">
             <motion.p
               initial={{ opacity: 0 }}
@@ -758,7 +769,7 @@ export default function DependentFoto() {
                 <div className="flex flex-wrap gap-2.5">
                   <MagneticLink
                     href={wa(
-                      "Halo dependent.foto, saya ingin melihat paket fotografi."
+                      "Halo dependen.foto, saya ingin melihat paket fotografi."
                     )}
                   >
                     Tanya harga
@@ -857,7 +868,7 @@ export default function DependentFoto() {
                 <motion.a
                   key={item.title}
                   href={wa(
-                    `Halo dependent.foto, saya tertarik dengan jasa foto ${item.title.toLowerCase()}.`
+                    `Halo dependen.foto, saya tertarik dengan jasa foto ${item.title.toLowerCase()}.`
                   )}
                   whileHover={{ y: -8 }}
                   transition={{ duration: 0.3 }}
@@ -965,7 +976,7 @@ export default function DependentFoto() {
           <div className="grid gap-12 lg:grid-cols-[1fr_.65fr]">
             <Reveal>
               <p className="mb-5 text-[10px] font-bold uppercase tracking-[.2em] text-black/45">
-                03 / Kenapa dependent.foto
+                03 / Kenapa dependen.foto
               </p>
 
               <h2 className="section-title font-bold leading-[.95] tracking-[-.045em]">
@@ -1049,7 +1060,7 @@ export default function DependentFoto() {
                 <motion.a
                   key={title}
                   href={wa(
-                    `Halo dependent.foto, saya tertarik dengan jasa foto ${title.toLowerCase()}.`
+                    `Halo dependen.foto, saya tertarik dengan jasa foto ${title.toLowerCase()}.`
                   )}
                   onMouseEnter={() => setService(i)}
                   whileHover={{ x: 7 }}
@@ -1156,13 +1167,13 @@ export default function DependentFoto() {
                     i % 3 === 0
                       ? "h-[360px] w-[250px]"
                       : i % 3 === 1
-                      ? "h-[270px] w-[380px]"
-                      : "h-[320px] w-[245px]"
+                        ? "h-[270px] w-[380px]"
+                        : "h-[320px] w-[245px]"
                   }`}
                 >
                   <Image
                     src={src}
-                    alt="Koleksi foto dependent.foto"
+                    alt="Koleksi foto dependen.foto"
                     fill
                     sizes="380px"
                     className="object-cover"
@@ -1182,7 +1193,7 @@ export default function DependentFoto() {
               className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[.1em]"
             >
               <Instagram size={16} />
-              @dependent.foto
+              @dependen.foto
             </a>
           </div>
         </div>
@@ -1193,8 +1204,6 @@ export default function DependentFoto() {
       ===================================================== */}
 
       <section className="relative overflow-hidden bg-[var(--purple)] px-5 py-24 text-white sm:px-8 sm:py-36">
-        {/* Decorative background elements */}
-
         <motion.div
           animate={{
             rotate: [0, 360],
@@ -1240,13 +1249,11 @@ export default function DependentFoto() {
               </div>
 
               <p className="max-w-xs text-sm leading-6 text-white/50">
-                Sembilan cerita kecil dari orang-orang yang pernah mempercayakan
-                momennya kepada kami.
+                Sembilan cerita kecil dari orang-orang yang pernah
+                mempercayakan momennya kepada kami.
               </p>
             </div>
           </Reveal>
-
-          {/* Review wall */}
 
           <div className="mt-16 grid gap-5 sm:mt-20 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             {testimonials.map((review, i) => (
@@ -1258,8 +1265,6 @@ export default function DependentFoto() {
             ))}
           </div>
 
-          {/* Bottom statement */}
-
           <Reveal delay={0.2}>
             <div className="mt-20 flex flex-col gap-6 border-t border-white/10 pt-7 sm:mt-28 sm:flex-row sm:items-center sm:justify-between">
               <p className="max-w-xl text-lg font-medium leading-7 text-white/70 sm:text-xl">
@@ -1269,7 +1274,7 @@ export default function DependentFoto() {
 
               <a
                 href={wa(
-                  "Halo dependent.foto, saya ingin konsultasi kebutuhan fotografi."
+                  "Halo dependen.foto, saya ingin konsultasi kebutuhan fotografi."
                 )}
                 className="group inline-flex w-fit items-center gap-3 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-[10px] font-bold uppercase tracking-[.14em] backdrop-blur-sm transition-colors hover:bg-[var(--orange)] hover:text-black"
               >
@@ -1330,7 +1335,7 @@ export default function DependentFoto() {
               <div className="mt-8 flex flex-wrap gap-2.5">
                 <MagneticLink
                   href={wa(
-                    "Halo dependent.foto, saya ingin booking sesi foto. Bisa info paket dan jadwalnya?"
+                    "Halo dependen.foto, saya ingin booking sesi foto. Bisa info paket dan jadwalnya?"
                   )}
                 >
                   Booking sekarang
@@ -1338,7 +1343,7 @@ export default function DependentFoto() {
 
                 <MagneticLink
                   href={wa(
-                    "Halo dependent.foto, saya ingin konsultasi kebutuhan fotografi."
+                    "Halo dependen.foto, saya ingin konsultasi kebutuhan fotografi."
                   )}
                 >
                   Chat WhatsApp
@@ -1355,13 +1360,13 @@ export default function DependentFoto() {
 
       <footer className="bg-black px-5 py-7 text-white sm:px-8">
         <div className="mx-auto flex max-w-[1500px] flex-col gap-4 border-t border-white/15 pt-5 text-[9px] uppercase tracking-[.16em] text-white/45 sm:flex-row sm:items-center sm:justify-between">
-          <span>dependent.foto © 2026</span>
+          <span>dependen.foto © 2026</span>
 
           <span>Foto yang punya rasa.</span>
 
           <a
             href={wa(
-              "Halo dependent.foto, saya ingin melihat paket fotografi."
+              "Halo dependen.foto, saya ingin melihat paket fotografi."
             )}
             className="text-white"
           >
