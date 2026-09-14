@@ -899,7 +899,7 @@ export default function DependenFoto() {
           SELECTED STORIES
       ===================================================== */}
 
-      <section className="bg-[#33245A] px-5 py-20 text-white sm:px-8 sm:py-32">
+      <section className="bg-[#4A148C] px-5 py-20 text-white sm:px-8 sm:py-32">
         <div className="mx-auto max-w-[1500px]">
           <Reveal>
             <p className="text-[10px] font-bold uppercase tracking-[.2em] text-white/60">
@@ -1158,7 +1158,7 @@ export default function DependenFoto() {
           UNGU DIBUAT LEBIH SOFT
       ===================================================== */}
 
-      <section className="relative overflow-hidden bg-[#33245A] px-5 py-24 text-white sm:px-8 sm:py-36">
+      <section className="relative overflow-hidden bg-[#4A148C] px-5 py-24 text-white sm:px-8 sm:py-36">
         <motion.div
           animate={{
             rotate: [0, 360],
